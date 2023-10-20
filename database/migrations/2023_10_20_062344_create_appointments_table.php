@@ -23,7 +23,7 @@ return new class extends Migration
             $table->dateTime('appointment_date');
 
             $table->unsignedBigInteger('request_by');
-            $table->foreign('request_by')->references('id')->on('user_id');
+            $table->foreign('request_by')->references('id')->on('users');
 
             $table->timestamps();
         });

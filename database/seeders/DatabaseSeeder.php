@@ -12,6 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        \App\Models\User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'admin' => true,
+        ]);
+
         $qtd_medics = rand(2, 5);
         $qtd_patients = rand(5, 30);
 
@@ -29,9 +36,5 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Appointment::factory($qtd_appointments)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

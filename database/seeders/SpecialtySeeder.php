@@ -49,7 +49,7 @@ class SpecialtySeeder extends Seeder
     public function run(): void
     {
         foreach ($this->specialtyNames as $specialtyName) {
-            Specialty::firstOrCreate(['specialty' => $specialtyName]);
+            Specialty::firstOrCreate(['name' => $specialtyName]);
         }
     }
 }

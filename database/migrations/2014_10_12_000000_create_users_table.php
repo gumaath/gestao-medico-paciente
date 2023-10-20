@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('responsable_name')->nullable();
             $table->string('responsable_cpf')->nullable();
             $table->rememberToken();
+            $table->boolean('admin')->default(0);
             $table->timestamps();
         });
     }
