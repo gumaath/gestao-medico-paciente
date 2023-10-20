@@ -8,21 +8,21 @@ class ResourceController extends Controller
 {
     public function medic()
     {
-        // Lógica para a tela de cadastro de médico
+        return view('resources.medic');
     }
 
     public function patient()
     {
-        // Lógica para a tela de cadastro de paciente
+        return view('resources.patient');
     }
 
     public function specialty()
     {
-        // Lógica para a tela de cadastro de especialidade
+        return view('resources.specialty');
     }
 
     public function admin()
     {
-        // Lógica para a tela de cadastro de especialidade
+        return view('resources.admin');
     }
 }

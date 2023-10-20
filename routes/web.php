@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,10 +37,11 @@ Route::middleware(['splade'])->group(function () {
 
     require __DIR__ . '/auth.php';
 
-    Route::get('/resource/medic', 'ResourceController@medic')->name('resource.medic');
-    Route::get('/resource/patient', 'ResourceController@patient')->name('resource.patient');
-    Route::get('/resource/specialty', 'ResourceController@specialty')->name('resource.specialty');
-    Route::get('/resource/admin', 'ResourceController@admin')->name('resource.admin');
+    Route::get('/resource/medic', [ResourceController::class, 'medic'])->name('index.medic');
+    Route::get('/resource/patient', [ResourceController::class, 'patient'])->name('index.patient');
+    Route::get('/resource/specialty', [ResourceController::class, 'specialty'])->name('index.specialty');
+    Route::get('/resource/admin', [ResourceController::class, 'admin'])->name('index.admin');
+
 
 
     // Registers routes to support the interactive components...

@@ -11,19 +11,19 @@
                 <div class="p-6 text-gray-900">
                     @auth
                         @if (auth()->user()->admin)
-                            <Link href="{{ route('register') }}"
+                            <Link href="{{ url('resource/medic') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar médico
                             </Link>
-                            <Link href="{{ route('profile.edit') }}"
+                            <Link href="{{ url('resource/patient') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar paciente
                             </Link>
-                            <Link href="{{ route('profile.edit') }}"
+                            <Link href="{{ url('resource/specialty') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar especialidade
                             </Link>
-                            <Link href="{{ route('profile.edit') }}"
+                            <Link href="{{url('resource/admin') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar administrador
                             </Link>
