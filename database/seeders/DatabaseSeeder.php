@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        \App\Models\User::factory()->create([
-            'name' => 'Admin',
+        $admin = \App\Models\User::firstOrNew([
             'email' => 'admin@admin.com',
-            'admin' => true,
         ]);
+
+        if (!$admin->exists) {
+            $admin->fill([
+                'name' => 'Admin',
+                'admin' => true,
+            ])->save();
+        }
 
         $qtd_medics = rand(2, 5);
         $qtd_patients = rand(5, 30);
