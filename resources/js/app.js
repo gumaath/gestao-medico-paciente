@@ -2,6 +2,7 @@ import "./bootstrap";
 import "../css/app.css";
 import "@protonemedia/laravel-splade/dist/style.css";
 import Alpine from 'alpinejs';
+import 'jquery-mask-plugin';
 
 window.Alpine = Alpine;
 
