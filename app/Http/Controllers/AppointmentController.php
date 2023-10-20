@@ -12,7 +12,7 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(Request $request)
+    public function index(Request $request)
     {
         return view('dashboard', [
             'appointments' => Appointments::class
@@ -38,7 +38,7 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Appointment $appointments)
+    public function show(Appointment $appointment)
     {
         //
     }
@@ -46,7 +46,7 @@ class AppointmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Appointment $appointments)
+    public function edit(Appointment $appointment)
     {
         //
     }
@@ -54,7 +54,7 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Appointment $appointments)
+    public function update(Request $request, Appointment $appointment)
     {
         //
     }
@@ -62,8 +62,13 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointment $appointments)
+    public function destroy(Appointment $appointment)
     {
-        //
+
+        $this->authorize('delete', $appointment);
+
+        $appointment->delete();
+
+        return redirect(route('dashboard'));
     }
 }
