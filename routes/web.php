@@ -21,12 +21,12 @@ Route::middleware(['splade'])->group(function () {
     });
 
     Route::resource('dashboard', AppointmentController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified'])->name('index', 'dashboard');
+        ->only(['index'])
+        ->middleware(['auth', 'verified'])->name('index', 'dashboard');
 
     Route::resource('appointments', AppointmentController::class)
-    ->only(['store', 'edit', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
+        ->only(['store', 'edit', 'update', 'destroy'])
+        ->middleware(['auth', 'verified']);
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,7 +34,13 @@ Route::middleware(['splade'])->group(function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    require __DIR__.'/auth.php';
+    require __DIR__ . '/auth.php';
+
+    Route::get('/resource/medic', 'ResourceController@medic')->name('resource.medic');
+    Route::get('/resource/patient', 'ResourceController@patient')->name('resource.patient');
+    Route::get('/resource/specialty', 'ResourceController@specialty')->name('resource.specialty');
+    Route::get('/resource/admin', 'ResourceController@admin')->name('resource.admin');
+
 
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();

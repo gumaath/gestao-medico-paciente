@@ -11,18 +11,22 @@
                 <div class="p-6 text-gray-900">
                     @auth
                         @if (auth()->user()->admin)
-                            <button
+                            <Link href="{{ route('register') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
-                                Cadastrar médico
-                            </button>
-                            <button
+                            Cadastrar médico
+                            </Link>
+                            <Link href="{{ route('profile.edit') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
-                                Cadastrar paciente
-                            </button>
-                            <button
+                            Cadastrar paciente
+                            </Link>
+                            <Link href="{{ route('profile.edit') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
-                                Cadastrar especialidade
-                            </button>
+                            Cadastrar especialidade
+                            </Link>
+                            <Link href="{{ route('profile.edit') }}"
+                                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
+                            Cadastrar administrador
+                            </Link>
                         @endif
                     @endauth
 
