@@ -12,11 +12,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $qtd_medics = rand(2, 5);
+        $qtd_patients = rand(5, 30);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $qtd_users = $qtd_medics + $qtd_patients;
+
+        $qtd_appointments = $qtd_patients * rand(1, 3);
+
+        \App\Models\User::factory($qtd_users)->create();
+
+        $this->call(SpecialtySeeder::class);
+
+        \App\Models\Medic::factory($qtd_medics)->create();
+
+        \App\Models\Patient::factory($qtd_patients)->create();
+
+        \App\Models\Appointment::factory($qtd_appointments)->create();
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
     }
 }
