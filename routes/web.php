@@ -20,7 +20,13 @@ Route::middleware(['splade'])->group(function () {
         return view('welcome');
     });
 
-    Route::get('/dashboard', AppointmentController::class)->middleware(['auth', 'verified'])->name('dashboard');
+    Route::resource('dashboard', AppointmentController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'verified'])->name('index', 'dashboard');
+
+    Route::resource('appointments', AppointmentController::class)
+    ->only(['store', 'edit', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
