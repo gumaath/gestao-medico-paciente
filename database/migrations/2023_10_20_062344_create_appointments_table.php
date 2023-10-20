@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('medic_id');
-            $table->foreign('medic_id')->references('id')->on('medics');
+            $table->foreign('medic_id')->references('id')->on('medics')->onDelete('cascade');
 
             $table->unsignedBigInteger('patient_id');
-            $table->foreign('patient_id')->references('id')->on('patients');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
 
             $table->dateTime('appointment_date');
 
             $table->unsignedBigInteger('request_by');
-            $table->foreign('request_by')->references('id')->on('users');
+            $table->foreign('request_by')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
