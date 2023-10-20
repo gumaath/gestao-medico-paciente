@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'birthdate',
     ];
 
     /**
@@ -41,5 +42,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'birthdate' => 'datetime',
     ];
+
+    public function medic()
+    {
+        return $this->hasOne(Medic::class, 'user_id', 'id');
+    }
+
+    public function patient()
+    {
+        return $this->hasOne(Patient::class, 'user_id', 'id');
+    }
 }
