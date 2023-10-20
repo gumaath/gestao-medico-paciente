@@ -12,11 +12,11 @@ class Medic extends Model
 
     public function specialty()
     {
-        return $this->hasOne(Specialty::class, 'id');
+        return $this->hasOne(Specialty::class, 'id', 'specialty_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
