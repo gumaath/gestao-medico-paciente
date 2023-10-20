@@ -20,9 +20,9 @@
 
         <!-- CPF -->
         <div class="mt-4">
-            <x-input-label for="CPF" :value="__('CPF')" />
-            <x-text-input id="CPF" class="block mt-1 w-full" type="text" name="CPF" :value="old('CPF')"
-                required autocomplete="CPF" />
+            <x-input-label for="cpf" :value="__('CPF')" />
+            <x-text-input id="cpf" class="block mt-1 w-full" type="text" name="cpf" :value="old('cpf')"
+                required autocomplete="cpf" />
             <x-input-error :messages="$errors->get('CPF')" class="mt-2" />
         </div>
 
@@ -36,16 +36,16 @@
 
         <!-- Telefones -->
         <div class="mt-4">
-            <x-input-label for="telephone" :value="__('Telefones (máximo 3)')" />
-            <x-text-input id="telephone" class="block mt-1 w-full" type="text" name="telephone" :value="old('telephone')"
+            <x-input-label for="telephones" :value="__('Telefones (máximo 3)')" />
+            <x-text-input id="telephones" class="block mt-1 w-full" type="text" name="telephones" :value="old('telephones')"
                 required autocomplete="username" />
-            <x-input-error :messages="$errors->get('telephone')" class="mt-2" />
+            <x-input-error :messages="$errors->get('telephones')" class="mt-2" />
         </div>
 
         <!-- CEP -->
         <div class="mt-4">
-            <x-input-label for="CEP" :value="__('CEP')" />
-            <x-text-input id="CEP" class="block mt-1 w-full" type="text" name="CEP" :value="old('CEP')"
+            <x-input-label for="cep" :value="__('CEP')" />
+            <x-text-input id="cep" class="block mt-1 w-full" type="text" name="cep" :value="old('cep')"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('cep')" class="mt-2" />
         </div>
@@ -53,17 +53,17 @@
         <!-- Endereço -->
         <div class="mt-4">
             <x-input-label for="address" :value="__('Endereço')" />
-            <x-text-input disabled id="address" class="block mt-1 w-full" type="text" name="address"
+            <x-text-input readonly id="address" class="block mt-1 w-full" type="text" name="address"
                 :value="old('address')" required autocomplete="address" />
             <x-input-error :messages="$errors->get('address')" class="mt-2" />
         </div>
 
         <!-- Número da casa -->
         <div class="mt-4">
-            <x-input-label for="address_number" :value="__('Número')" />
-            <x-text-input id="address_number" class="block mt-1 w-full" type="text" name="address_number"
-                :value="old('address_number')" required autocomplete="address_number" />
-            <x-input-error :messages="$errors->get('address_number')" class="mt-2" />
+            <x-input-label for="number_address" :value="__('Número')" />
+            <x-text-input id="number_address" class="block mt-1 w-full" type="text" name="number_address"
+                :value="old('number_address')" required autocomplete="number_address" />
+            <x-input-error :messages="$errors->get('number_address')" class="mt-2" />
         </div>
 
         <!-- Password -->
@@ -100,13 +100,13 @@
 </x-guest-layout>
 <script type="module">
     $(document).ready(function($) {
-        $('#CPF').mask('000.000.000-00', {
+        $('#cpf').mask('000.000.000-00', {
             reverse: true
         });
-        $('#CEP').mask('00000000', {
+        $('#cep').mask('00000000', {
             reverse: true
         });
-        $('#telephone').mask('(99) 9 9999-9999, (99) 9 9999-9999, (99) 9 9999-9999');
+        $('#telephones').mask('(99) 9 9999-9999, (99) 9 9999-9999, (99) 9 9999-9999');
 
     });
 
@@ -133,7 +133,7 @@
     }
 
     // Event listener for #CEP blur
-    $('#CEP').blur(function() {
+    $('#cep').blur(function() {
         if ($(this).val().length == 8) {
             var cep = $(this).val().replace(/\D/g, '');
             var number = $('#address_number').val();
@@ -144,7 +144,7 @@
 
     // Event listener for #number_address
     $('#address_number').blur(function() {
-        var cep = $('#CEP').val().replace(/\D/g, '');
+        var cep = $('#cep').val().replace(/\D/g, '');
         var number = $(this).val();
 
         updateAddressField(cep, number);

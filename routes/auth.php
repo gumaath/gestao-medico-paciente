@@ -9,13 +9,23 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\PatientController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', function (Request $request) {
+        // Call the store method of RegisteredUserController
+        $user_id = app(RegisteredUserController::class)->store($request);
+
+        // Call a method from AnotherController
+        $redirect = app(PatientController::class)->store($user_id, $request);
+
+        return $redirect;
+    });
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
