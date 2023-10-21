@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Specialty;
 use Illuminate\Http\Request;
 
 class ResourceController extends Controller
 {
     public function medic()
     {
-        return view('resources.medic');
+        $specialities = Specialty::all();
+        return view('resources.medic', compact('specialities'));
     }
 
     public function patient()

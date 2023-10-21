@@ -10,6 +10,17 @@ class Medic extends Model
 {
     use HasFactory;
 
+        /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'crm',
+        'specialty_id',
+    ];
+
     public function specialty()
     {
         return $this->hasOne(Specialty::class, 'id', 'specialty_id');
