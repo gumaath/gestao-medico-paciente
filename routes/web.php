@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MedicController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecialtyController;
@@ -101,6 +103,9 @@ Route::middleware(['splade'])->group(function () {
         return $redirect;
 
     })->middleware(['auth', 'verified', 'admin'])->name('register.appointment');
+
+    Route::post('/check-patient-birthdate', [PatientController::class, 'checkPatientBirthdate']);
+    Route::post('/search-pediatric-medics', [MedicController::class, 'searchPediatricMedics']);
 
 
     // Registers routes to support the interactive components...

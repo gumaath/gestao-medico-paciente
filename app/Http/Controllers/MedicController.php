@@ -62,4 +62,19 @@ class MedicController extends Controller
     {
         //
     }
+
+    public function searchPediatricMedics()
+    {
+        $medics = Medic::where('specialty_id', 1)
+            ->with('user') // Eager load the User relationship
+            ->get();
+
+        $medicNames = $medics->map(function ($medic) {
+            return [
+                'value' => $medic->id,
+                'medic' => $medic->user->name,
+            ];
+        });
+        return response()->json(['medics' => $medicNames]);
+    }
 }

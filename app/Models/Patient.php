@@ -47,4 +47,16 @@ class Patient extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function checkPatientBirthdate()
+    {
+
+        $birthdate = $this->user->birthdate; // Adjust this to match your database field name
+
+        $birthdate = \Carbon\Carbon::parse($birthdate);
+        $today = \Carbon\Carbon::now();
+        $age = $birthdate->diffInYears($today);
+
+        return $age < 12;
+    }
 }

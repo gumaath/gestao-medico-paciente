@@ -83,4 +83,30 @@ class PatientController extends Controller
     {
         //
     }
+
+    public function checkPatientBirthdate(Request $request)
+    {
+
+        $patient = Patient::where('id', $request->patient)->first();
+
+        if (!$patient) {
+            return response()->json(['error' => 'Patient not found']);
+        }
+
+        $birthdate = $patient->user->birthdate; // Adjust this to match your database field name
+
+        // Perform logic to check the patient's age based on their birthdate
+        $isMinor = $this->isMinor($birthdate);
+
+        return response()->json(['isMinor' => $isMinor]);
+    }
+
+    private function isMinor($birthdate)
+    {
+        $birthdate = \Carbon\Carbon::parse($birthdate);
+        $today = \Carbon\Carbon::now();
+        $age = $birthdate->diffInYears($today);
+
+        return $age < 12;
+    }
 }

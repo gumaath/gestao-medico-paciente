@@ -78,7 +78,7 @@ class Appointments extends AbstractTable
                 ->join('specialties', 'medics.specialty_id', '=', 'specialties.id');
 
             return QueryBuilder::for($query)
-                ->allowedFilters(['medic.specialty.name', 'medic.user.name', 'medic.crm'])
+                ->allowedFilters(['medic.specialty.name', 'medic.user.name', 'medic.crm', AllowedFilter::exact('medic.specialty_id')])
                 ->allowedSorts(['appointment_date'])
                 ->defaultSort('appointment_date')
                 ->paginate();
@@ -114,15 +114,22 @@ class Appointments extends AbstractTable
                 ->column('created_at', 'Data do agendamento')
                 ->column('--', canBeHidden: false);
         } else {
+            $patient = $user->patient;
 
-            $specialities = Specialty::pluck('name')->toArray();
+                if ($patient->checkPatientBirthdate()) {
+                    $specialities = Specialty::find(1);
+                    $specialities = [$specialities->id => $specialities->name];
+                }
+                else
+                    $specialities = Specialty::all()->pluck('name', 'id')->toArray();
+
             $table
                 ->column('medic.user.name', 'Nome do Médico', searchable: true)
                 ->column('medic.crm', 'CRM', searchable: true, hidden: true)
                 ->column('medic.specialty.name', 'Especialidade')
                 ->column('appointment_date', 'Data da Consulta', sortable: true)
                 ->column('created_at', 'Data do agendamento')
-                ->selectFilter('medic.specialty.name', $specialities, 'Especialidade');
+                ->selectFilter('medic.specialty_id', $specialities, 'Especialidade');
         }
     }
 }
