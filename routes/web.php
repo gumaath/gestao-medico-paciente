@@ -1,14 +1,5 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\MedicController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\ResourceController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SpecialtyController;
-use App\Http\Controllers\TypeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,96 +18,50 @@ Route::middleware(['splade'])->group(function () {
         return view('welcome');
     });
 
+    // Authentication routes
+    require __DIR__ . '/auth.php';
+
+    // Dashboard route
     Route::resource('dashboard', AppointmentController::class)
         ->only(['index'])
-        ->middleware(['auth', 'verified'])->name('index', 'dashboard');
+        ->middleware(['auth', 'verified'])
+        ->name('index', 'dashboard');
 
+    // Appointment routes
     Route::resource('appointments', AppointmentController::class)
         ->only(['store', 'edit', 'update', 'destroy'])
         ->middleware(['auth', 'verified']);
 
+    // Profile routes
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    require __DIR__ . '/auth.php';
+    // Resource routes for admin
+    Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+        Route::get('/resource/medic', [ResourceController::class, 'medic'])->name('index.medic');
+        Route::get('/resource/patient', [ResourceController::class, 'patient'])->name('index.patient');
+        Route::get('/resource/specialty', [ResourceController::class, 'specialty'])->name('index.specialty');
+        Route::get('/resource/admin', [ResourceController::class, 'admin'])->name('index.admin');
+        Route::get('/resource/appointment', [ResourceController::class, 'appointment'])->name('index.appointment');
 
-    Route::get('/resource/medic', [ResourceController::class, 'medic'])->middleware(['auth', 'verified', 'admin'])->name('index.medic');
-    Route::get('/resource/patient', [ResourceController::class, 'patient'])->middleware(['auth', 'verified', 'admin'])->name('index.patient');
-    Route::get('/resource/specialty', [ResourceController::class, 'specialty'])->middleware(['auth', 'verified', 'admin'])->name('index.specialty');
-    Route::get('/resource/admin', [ResourceController::class, 'admin'])->middleware(['auth', 'verified', 'admin'])->name('index.admin');
-    Route::get('/resource/appointment', [ResourceController::class, 'appointment'])->middleware(['auth', 'verified', 'admin'])->name('index.appointment');
+        // Registration routes for different user types
+        Route::post('register/patient', [TypeController::class, 'patient'])->name('register.patient');
+        Route::post('register/admin', [TypeController::class, 'admin'])->name('register.admin');
+        Route::post('register/specialty', [SpecialtyController::class, 'store'])->name('register.speciality');
+        Route::post('register/medic', [TypeController::class, 'medic'])->name('register.medic');
+        Route::post('register/appointment', [AppointmentController::class, 'store'])->name('register.appointment');
+    });
 
-    Route::post('register/patient', function (Request $request) {
-        // Call the store method of RegisteredUserController
-        $user_id = app(RegisteredUserController::class)->store($request);
-
-        $request->validate([
-            'cpf' => ['required', 'string', 'max:14'],
-            'telephones' => ['required'],
-            'cep' => ['required', 'string', 'max:8'],
-            'address' => ['required', 'string', 'max:255'],
-        ]);
-
-        // Call a method from AnotherController
-        $redirect = app(TypeController::class)->patient($user_id, $request);
-
-        return $redirect;
-    })->middleware(['auth', 'verified', 'admin'])->name('register.patient');
-
-    Route::post('register/admin', function (Request $request) {
-        $redirect = app(TypeController::class)->admin($request);
-
-        return $redirect;
-    })->middleware(['auth', 'verified', 'admin'])->name('register.admin');
-
-    Route::post('register/specialty', function (Request $request) {
-        $redirect = app(SpecialtyController::class)->store($request);
-
-        return $redirect;
-    })->middleware(['auth', 'verified', 'admin'])->name('register.speciality');
-
-    Route::post('register/medic', function (Request $request) {
-
-        $request->validate([
-            'crm' => ['required'],
-            'specialty' => ['required'],
-        ]);
-
-        // Call the store method of RegisteredUserController
-        $user_id = app(RegisteredUserController::class)->store($request);
-
-        // Call a method from AnotherController
-        $redirect = app(TypeController::class)->medic($user_id, $request);
-
-        return $redirect;
-
-    })->middleware(['auth', 'verified', 'admin'])->name('register.medic');
-
-    Route::post('register/appointment', function (Request $request) {
-
-        // Call a method from AnotherController
-        $redirect = app(AppointmentController::class)->store($request);
-
-        return $redirect;
-
-    })->middleware(['auth', 'verified', 'admin'])->name('register.appointment');
-
+    // Additional routes
     Route::post('/check-patient-birthdate', [PatientController::class, 'checkPatientBirthdate']);
     Route::post('/search-pediatric-medics', [MedicController::class, 'searchPediatricMedics']);
 
-
-    // Registers routes to support the interactive components...
-    Route::spladeWithVueBridge();
-
-    // Registers routes to support password confirmation in Form and Link components...
-    Route::spladePasswordConfirmation();
-
-    // Registers routes to support Table Bulk Actions and Exports...
-    Route::spladeTable();
-
-    // Registers routes to support async File Uploads with Filepond...
-    Route::spladeUploads();
+    // Registers routes for various features and components
+    Route::spladeWithVueBridge(); // Interactive components
+    Route::spladePasswordConfirmation(); // Password confirmation
+    Route::spladeTable(); // Table Bulk Actions and Exports
+    Route::spladeUploads(); // Async File Uploads with Filepond
 });

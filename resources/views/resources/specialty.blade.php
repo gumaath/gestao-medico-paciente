@@ -6,7 +6,7 @@
     <form method="POST" action="{{ route('register.speciality') }}">
         @csrf
 
-        <!-- Name -->
+        <!-- Nome -->
         <div>
             <x-input-label for="name" :value="__('Nome')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required

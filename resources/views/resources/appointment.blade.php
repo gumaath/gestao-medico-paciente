@@ -7,7 +7,7 @@
             @csrf
             <input type="hidden" name="resource" value="true">
 
-            <!-- Especialidade -->
+            <!-- Paciente -->
             <div class="mt-4">
                 <x-input-label for="patient" :value="__('Paciente')" />
                 <select name="patient" id="patient"
@@ -20,7 +20,7 @@
                 <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
             </div>
 
-            <!-- Especialidade -->
+            <!-- Médico -->
             <div class="mt-4">
                 <x-input-label for="medic" :value="__('Médico')" />
                 <select name="medic" id="medic"
@@ -33,7 +33,7 @@
                 <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
             </div>
 
-            <!-- Data de Nascimento -->
+            <!-- Data da Consulta -->
             <div class="mt-4">
                 <x-input-label for="date" :value="__('Data da Consulta')" />
                 <x-text-input id="date" class="block mt-1 w-full" type="dateTime-local" name="date"

@@ -2,12 +2,30 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Class User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property \Carbon\Carbon $birthdate
+ * @property int $admin
+ * @property \Carbon\Carbon $email_verified_at
+ * @property string $remember_token
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ *
+ * @property Medic $medic
+ * @property Patient $patient
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -22,7 +40,7 @@ class User extends Authenticatable
         'email',
         'password',
         'birthdate',
-        'admin'
+        'admin',
     ];
 
     /**
@@ -46,11 +64,21 @@ class User extends Authenticatable
         'birthdate' => 'datetime',
     ];
 
+    /**
+     * Get the medic associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function medic()
     {
         return $this->hasOne(Medic::class, 'user_id', 'id');
     }
 
+    /**
+     * Get the patient associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function patient()
     {
         return $this->hasOne(Patient::class, 'user_id', 'id');
