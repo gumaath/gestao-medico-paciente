@@ -5,12 +5,13 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    @auth
-                        @if (auth()->user()->admin)
+    @auth
+        @if (auth()->user()->admin)
+            <div class="py-6">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+
                             <Link href="{{ url('resource/medic') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar médico
@@ -23,17 +24,21 @@
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar especialidade
                             </Link>
-                            <Link href="{{url('resource/admin') }}"
+                            <Link href="{{ url('resource/admin') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar administrador
                             </Link>
-                        @endif
-                    @endauth
+                            <Link href="{{ url('resource/appointment') }}"
+                                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
+                            Agendar consultar
+                            </Link>
 
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        @endif
+    @endauth
 
     <div class="py-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
