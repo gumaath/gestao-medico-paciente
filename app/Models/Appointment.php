@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'patient_id',
+        'medic_id',
+        'appointment_date',
+        'request_by',
+    ];
+
+
     use HasFactory;
 
     public function medic()

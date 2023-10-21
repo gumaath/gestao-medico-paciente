@@ -3,6 +3,9 @@ import "../css/app.css";
 import "@protonemedia/laravel-splade/dist/style.css";
 import Alpine from 'alpinejs';
 import 'jquery-mask-plugin';
+import select2 from 'select2';
+import "/node_modules/select2/dist/css/select2.css";
+select2($);
 
 window.Alpine = Alpine;
 

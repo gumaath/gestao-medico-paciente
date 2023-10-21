@@ -15,8 +15,8 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (auth()->user()->admin)
-                    <x-nav-link :href="route('index.medic')" :active="request()->routeIs('index.medic', 'index.admin', 'index.specialty', 'index.patient')">
+                    @if (auth()->user()->admin && auth()->user()->medic)
+                    <x-nav-link :href="route('index.appointment')" :active="request()->routeIs('index.medic', 'index.admin', 'index.specialty', 'index.patient', 'index.appointment')">
                         {{ __('Cadastros') }}
                     </x-nav-link>
                     @endif

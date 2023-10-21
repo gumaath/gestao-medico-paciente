@@ -45,6 +45,7 @@ Route::middleware(['splade'])->group(function () {
     Route::get('/resource/patient', [ResourceController::class, 'patient'])->middleware(['auth', 'verified', 'admin'])->name('index.patient');
     Route::get('/resource/specialty', [ResourceController::class, 'specialty'])->middleware(['auth', 'verified', 'admin'])->name('index.specialty');
     Route::get('/resource/admin', [ResourceController::class, 'admin'])->middleware(['auth', 'verified', 'admin'])->name('index.admin');
+    Route::get('/resource/appointment', [ResourceController::class, 'appointment'])->middleware(['auth', 'verified', 'admin'])->name('index.appointment');
 
     Route::post('register/patient', function (Request $request) {
         // Call the store method of RegisteredUserController
@@ -91,6 +92,15 @@ Route::middleware(['splade'])->group(function () {
         return $redirect;
 
     })->middleware(['auth', 'verified', 'admin'])->name('register.medic');
+
+    Route::post('register/appointment', function (Request $request) {
+
+        // Call a method from AnotherController
+        $redirect = app(AppointmentController::class)->store($request);
+
+        return $redirect;
+
+    })->middleware(['auth', 'verified', 'admin'])->name('register.appointment');
 
 
     // Registers routes to support the interactive components...

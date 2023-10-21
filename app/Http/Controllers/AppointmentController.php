@@ -32,7 +32,20 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'patient' => ['required'],
+            'medic' => ['required'],
+            'date' => ['required'],
+        ]);
+
+        Appointment::create([
+            'patient_id' => $request->patient,
+            'medic_id' => $request->medic,
+            'appointment_date' => $request->date,
+            'request_by' => auth()->user()->id
+        ]);
+
+        return redirect('/dashboard');
     }
 
     /**

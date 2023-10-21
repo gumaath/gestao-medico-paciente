@@ -111,6 +111,7 @@ class Appointments extends AbstractTable
             $table
                 ->column('patient.user.name', 'Nome do Paciente', searchable: true)
                 ->column('appointment_date', 'Data da Consulta', sortable: true)
+                ->column('created_at', 'Data do agendamento')
                 ->column('--', canBeHidden: false);
         } else {
 
@@ -118,8 +119,9 @@ class Appointments extends AbstractTable
             $table
                 ->column('medic.user.name', 'Nome do Médico', searchable: true)
                 ->column('medic.crm', 'CRM', searchable: true, hidden: true)
-                ->column('appointment_date', 'Data da Consulta', sortable: true)
                 ->column('medic.specialty.name', 'Especialidade')
+                ->column('appointment_date', 'Data da Consulta', sortable: true)
+                ->column('created_at', 'Data do agendamento')
                 ->selectFilter('medic.specialty.name', $specialities, 'Especialidade');
         }
     }
