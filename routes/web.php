@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\MedicController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
