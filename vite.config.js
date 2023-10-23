@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/forms.js',
             ],
             ssr: "resources/js/ssr.js",
             refresh: true,

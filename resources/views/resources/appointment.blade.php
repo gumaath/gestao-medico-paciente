@@ -1,5 +1,5 @@
 @extends('resources.main')
-
+@vite(['resources/js/forms.js'])
 @section('content')
     <div class="m-6">
         <h2>Cadastro de Agendamento</h2>
@@ -48,58 +48,4 @@
             </div>
         </form>
     </div>
-    <script type="module">
-        $(document).ready(function() {
-
-            $('#medic').select2();
-            $('#patient').select2();
-        });
-
-        $('#patient').on('change', function() {
-            const patient = $(this).val();
-
-
-            // Send an AJAX request to check the patient's birthdate
-            $.ajax({
-                url: '/check-patient-birthdate',
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    patient: patient
-                },
-                success: function(response) {
-                    if (response.isMinor) {
-                        // The patient is a minor, so search for medics with the specified specialty
-                        $.ajax({
-                            url: '/search-pediatric-medics',
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function(data) {
-                                // Clear existing options
-                                $('#medic').empty();
-
-                                // Add new options based on the data
-                                data.medics.forEach(function(item) {
-                                    $('#medic').append($('<option>', {
-                                        value: item.value,
-                                        text: item.medic
-                                    }));
-                                });
-                            },
-                            error: function(error) {
-                                // Handle errors
-                            }
-                        });
-                    }
-                },
-                error: function(error) {
-                    // Handle errors
-                }
-            });
-        });
-    </script>
 @endsection

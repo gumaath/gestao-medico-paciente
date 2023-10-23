@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Patient;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,8 +28,7 @@ class PatientFactory extends Factory
         }
         $telephones = json_encode($telephones);
 
-        return [
-            'user_id' => function() use ($usersIds, $patientsIds) {
+        $user = function ($usersIds, $patientsIds) {
                 $userId = fake()->unique()->randomElement($usersIds);
 
                 while (in_array($userId, $patientsIds)) {
@@ -36,12 +36,37 @@ class PatientFactory extends Factory
                 }
 
                 return $userId;
-            },
+        };
+
+        $user = $user($usersIds, $patientsIds);
+
+        $userData= User::find($user);
+
+        $userBirthdate = Carbon::parse($userData->birthdate);
+
+        $twelveYearsAgo = Carbon::now()->subYears(12);
+
+        if ($userBirthdate->isAfter($twelveYearsAgo)) {
+
+            $pattern = "/\b(?:Sr\.|Dr\.|Sra\.|Srta\.|Dr\.)\s*/i";
+
+            $responsableName = fake('pt_BR')->optional()->name();
+            $responsableName = preg_replace($pattern, '', $responsableName);
+
+            if ($responsableName) {
+                $responsableCpf = fake('pt_BR')->cpf();
+            }
+        }
+
+        return [
+            'user_id' => $userData->id,
             'cpf' => fake('pt_BR')->cpf(),
             'telephones' => $telephones,
             'cep' => fake()->randomNumber(8),
             'address' => fake()->streetName(),
-            'number_address' => fake()->buildingNumber()
+            'number_address' => fake()->buildingNumber(),
+            'responsable_cpf' => @$responsableCpf ?: null,
+            'responsable_name' => @$responsableName ?: null,
         ];
     }
 }

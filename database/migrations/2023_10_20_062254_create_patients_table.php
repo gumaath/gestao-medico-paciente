@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('cep');
             $table->string('address');
             $table->integer('number_address');
+            $table->string('responsable_name')->nullable();
+            $table->string('responsable_cpf')->nullable();
 
             $table->timestamps();
         });

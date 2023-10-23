@@ -38,6 +38,8 @@ class Patient extends Model
         'cep',
         'address',
         'number_address',
+        'responsable_cpf',
+        'responsable_name',
     ];
 
     /**

@@ -1,3 +1,4 @@
+@vite(['resources/js/forms.js'])
 @extends('resources.main')
 
 @section('content')
@@ -38,6 +39,23 @@
                     required autocomplete="birthdate" />
                 <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
             </div>
+
+            <!-- Responsable CPF (initially hidden) -->
+            <div class="mt-4" id="responsable-cpf-field" style="display: none;">
+                <x-input-label for="responsable-cpf" :value="__('CPF do Responsável')" />
+                <x-text-input id="responsable-cpf" class="block mt-1 w-full" type="text" name="responsable-cpf"
+                    :value="old('responsable-cpf')" autocomplete="responsable-cpf" />
+                <x-input-error :messages="$errors->get('responsable-cpf')" class="mt-2" />
+            </div>
+
+            <!-- Responsable Name (initially hidden) -->
+            <div class="mt-4" id="responsable-name-field" style="display: none;">
+                <x-input-label for="responsable-name" :value="__('Nome do Responsável')" />
+                <x-text-input id="responsable-name" class="block mt-1 w-full" type="text" name="responsable-name"
+                    :value="old('responsable-name')" autocomplete="responsable-name" />
+                <x-input-error :messages="$errors->get('responsable-name')" class="mt-2" />
+            </div>
+
 
             <!-- Telefones -->
             <div class="mt-4">
@@ -98,56 +116,4 @@
             </div>
         </form>
     </div>
-    <script type="module">
-        $(document).ready(function($) {
-            $('#cpf').mask('000.000.000-00', {
-                reverse: true
-            });
-            $('#cep').mask('00000000', {
-                reverse: true
-            });
-            $('#telephones').mask('(99) 9 9999-9999, (99) 9 9999-9999, (99) 9 9999-9999');
-
-        });
-
-        // Function to update the #address field
-        function updateAddressField(cep, number) {
-            var addressElement = $('#address');
-            $('#address').val('...');
-
-            axios.get("https://viacep.com.br/ws/" + cep + "/json/")
-                .then(response => {
-                    if (response.data.logradouro) {
-                        $('#address').val(response.data.logradouro + ', ' + number + ' - ' + response.data.localidade +
-                            ' - ' + response.data.uf);
-                    } else if (response.data.erro) {
-                        addressElement.val('');
-                        alert('Insira um CEP válido!');
-                    }
-                })
-                .catch(error => {
-                    // Handle any network or other errors
-                    addressElement.val('');
-                    alert('Insira um CEP válido!');
-                });;
-        }
-
-        // Event listener for #CEP blur
-        $('#cep').blur(function() {
-            if ($(this).val().length == 8) {
-                var cep = $(this).val().replace(/\D/g, '');
-                var number = $('#address_number').val();
-
-                updateAddressField(cep, number);
-            }
-        });
-
-        // Event listener for #number_address
-        $('#address_number').blur(function() {
-            var cep = $('#cep').val().replace(/\D/g, '');
-            var number = $(this).val();
-
-            updateAddressField(cep, number);
-        });
-    </script>
 @endsection

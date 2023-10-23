@@ -98,4 +98,25 @@ class MedicController extends Controller
 
         return response()->json(['medics' => $medicNames]);
     }
+
+    /**
+     * Search for all medics and return them as JSON.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loadAllMedics()
+    {
+        $medics = Medic::all();
+
+        $medicNames = $medics->map(function ($medic) {
+            return [
+                'value' => $medic->id,
+                'medic' => $medic->user->name,
+            ];
+        });
+
+        return response()->json(['medics' => $medicNames]);
+    }
+
+
 }

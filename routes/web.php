@@ -64,6 +64,7 @@ Route::middleware(['splade'])->group(function () {
     // Additional routes
     Route::post('/check-patient-birthdate', [PatientController::class, 'checkPatientBirthdate']);
     Route::post('/search-pediatric-medics', [MedicController::class, 'searchPediatricMedics']);
+    Route::post('/load-all-medics', [MedicController::class, 'loadAllMedics']);
 
     // Registers routes for various features and components
     Route::spladeWithVueBridge(); // Interactive components
