@@ -24,9 +24,13 @@
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar especialidade
                             </Link>
-                            <Link href="{{url('resource/admin') }}"
+                            <Link href="{{ url('resource/admin') }}"
                                 class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
                             Cadastrar administrador
+                            </Link>
+                            <Link href="{{ url('resource/appointment') }}"
+                                class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 mx-4 border border-gray-400 rounded shadow">
+                            Agendar consultar
                             </Link>
                         @endif
                     @endauth
