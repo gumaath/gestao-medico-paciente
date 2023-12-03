@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 /**
  * Class Patient
@@ -72,8 +73,8 @@ class Patient extends Model
     {
         $birthdate = $this->user->birthdate; // Adjust this to match your database field name
 
-        $birthdate = \Carbon\Carbon::parse($birthdate);
-        $today = \Carbon\Carbon::now();
+        $birthdate = Carbon::parse($birthdate);
+        $today = Carbon::now();
         $age = $birthdate->diffInYears($today);
 
         return $age < 12;
